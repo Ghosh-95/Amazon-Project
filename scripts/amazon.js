@@ -1,6 +1,7 @@
 import { default as products } from "../data/products.js";
+import cart from "../data/cart.js";
 
-let productsHTML = ''
+let productsHTML = '';
 
 products.forEach(product => {
     productsHTML += `
@@ -44,7 +45,7 @@ products.forEach(product => {
                 Added
             </div>
 
-            <button class="add-to-cart-button button-primary">
+            <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
                 Add to Cart
             </button>
         </div>
@@ -54,3 +55,20 @@ products.forEach(product => {
 const productsGrid = document.querySelector('.js-products-grid');
 
 productsGrid.insertAdjacentHTML('afterbegin', productsHTML);
+
+const addToCartBtn = document.querySelectorAll('.js-add-to-cart');
+
+addToCartBtn.forEach(btn => btn.addEventListener('click', function () {
+
+    const productId = this.dataset.productId;
+    let matchingItem;
+
+    cart.forEach(item => {
+        if (productId === item.productId) matchingItem = item;
+    });
+
+    matchingItem ? matchingItem.quantity += 1 : cart.push({ productId: productId, quantity: 1 });
+
+    console.log(cart);
+
+}));
