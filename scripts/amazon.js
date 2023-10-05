@@ -40,7 +40,7 @@ products.forEach(product => {
 
             <div class="product-spacer"></div>
 
-            <div class="added-to-cart">
+            <div class="added-to-cart js-added-to-cart-${product.id}">
                 <img src="images/icons/checkmark.png">
                 Added
             </div>
@@ -57,6 +57,8 @@ const productsGrid = document.querySelector('.js-products-grid');
 productsGrid.insertAdjacentHTML('afterbegin', productsHTML);
 
 const addToCartBtn = document.querySelectorAll('.js-add-to-cart');
+
+let addedMessageTimeouts = {};
 
 addToCartBtn.forEach(btn => btn.addEventListener('click', function () {
 
@@ -75,6 +77,15 @@ addToCartBtn.forEach(btn => btn.addEventListener('click', function () {
     cart.forEach(item => totalQuantity += item.quantity);
     document.querySelector('.cart-quantity').textContent = totalQuantity;
 
-    console.log(cart);
+    const addedMessageId = document.querySelector(`.js-added-to-cart-${productId}`);
 
+    addedMessageId.classList.add('added-to-cart-visible');
+
+    const previousTimeoutId = addedMessageTimeouts[productId];
+
+    if (previousTimeoutId) clearTimeout(previousTimeoutId);
+
+    const timeoutId = setTimeout(() => addedMessageId.classList.remove('added-to-cart-visible'), 2000)
+
+    addedMessageTimeouts[productId] = timeoutId;
 }));
