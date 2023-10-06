@@ -1,4 +1,4 @@
-import { cart } from "../data/cart.js";
+import { cart, removeFromCart } from "../data/cart.js";
 import { default as products } from "../data/products.js";
 
 function formatCurrency(priceCents) {
@@ -78,7 +78,7 @@ function generateMarkupCheckout(matchingProduct, cartItem) {
             <span class="update-quantity-link link-primary">
               Update
             </span>
-            <span class="delete-quantity-link link-primary">
+            <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
               Delete
             </span>
           </div>
@@ -141,7 +141,7 @@ export function addMarkupToPage(handler) {
 }
 
 
-export function addMarkupToCheckout() {
+export function addMarkupToCheckout(handler) {
     let cartSummeryHTML = '';
     cart.forEach(cartItem => {
 
@@ -157,4 +157,7 @@ export function addMarkupToCheckout() {
 
     const orderSummery = document.querySelector('.js-order-summery');
     orderSummery.insertAdjacentHTML('afterbegin', cartSummeryHTML);
+
+    const deleteButtons = document.querySelectorAll('.js-delete-link');
+    deleteButtons.forEach(btn => btn.addEventListener('click', handler));
 }
