@@ -1,6 +1,10 @@
 import { cart } from "../data/cart.js";
 import { default as products } from "../data/products.js";
 
+function formatCurrency(priceCents) {
+    return (priceCents / 100).toFixed(2)
+}
+
 function generateMarkupMain(product) {
     return `
     <div class="product-container">
@@ -18,7 +22,7 @@ function generateMarkupMain(product) {
         </div>
 
         <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)};
+            $${formatCurrency(product.priceCents)};
         </div>
 
         <div class="product-quantity-container">
@@ -65,7 +69,7 @@ function generateMarkupCheckout(matchingProduct, cartItem) {
             ${matchingProduct.name}
           </div>
           <div class="product-price">
-            $${(matchingProduct.priceCents / 100).toFixed(2)}
+            $${formatCurrency(matchingProduct.priceCents)}
           </div>
           <div class="product-quantity">
             <span>
@@ -85,7 +89,7 @@ function generateMarkupCheckout(matchingProduct, cartItem) {
             Choose a delivery option:
           </div>
           <div class="delivery-option">
-            <input type="radio" checked class="delivery-option-input" name="delivery-option-1">
+            <input type="radio" checked class="delivery-option-input" name="delivery-option-${matchingProduct.id}">
             <div>
               <div class="delivery-option-date">
                 Tuesday, June 21
@@ -96,7 +100,7 @@ function generateMarkupCheckout(matchingProduct, cartItem) {
             </div>
         </div>
         <div class="delivery-option">
-            <input type="radio" class="delivery-option-input" name="delivery-option-1">
+            <input type="radio" class="delivery-option-input" name="delivery-option-${matchingProduct.id}">
             <div>
               <div class="delivery-option-date">
                 Wednesday, June 15
@@ -107,7 +111,7 @@ function generateMarkupCheckout(matchingProduct, cartItem) {
             </div>
           </div>
         <div class="delivery-option">
-            <input type="radio" class="delivery-option-input" name="delivery-option-1">
+            <input type="radio" class="delivery-option-input" name="delivery-option-${matchingProduct.id}">
             <div>
               <div class="delivery-option-date">
                 Monday, June 13
