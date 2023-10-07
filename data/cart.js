@@ -15,16 +15,13 @@ function saveToLocalStorage() {
 export function addToCart(productId) {
     const selectQuantity = document.querySelector(`.js-quantity-selector-${productId}`);
     const quantity = Number(selectQuantity.value);
-    let matchingItem, totalQuantity = 0
+    let matchingItem;
 
     cart.forEach(cartItem => {
         if (productId === cartItem.productId) matchingItem = cartItem;
     });
 
     matchingItem ? matchingItem.quantity += quantity : cart.push({ productId, quantity });
-
-    cart.forEach(cartItem => totalQuantity += cartItem.quantity);
-    document.querySelector('.cart-quantity').textContent = totalQuantity;
 
     saveToLocalStorage();
 }

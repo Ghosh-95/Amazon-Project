@@ -1,7 +1,15 @@
-import { addToCart } from "../data/cart.js";
+import { addToCart, cart } from "../data/cart.js";
 import { addMarkupToPage } from "./markup.js";
 
 addMarkupToPage(handler);
+
+function updateQuantity() {
+    let totalQuantity = 0;
+    cart.forEach(cartItem => totalQuantity += cartItem.quantity);
+    document.querySelector('.cart-quantity').textContent = totalQuantity;
+}
+
+updateQuantity();
 
 function viewAddedMessage(productId) {
     let addedMessageTimeouts = {};
@@ -22,6 +30,8 @@ function handler() {
     const { productId } = this.dataset;
 
     addToCart(productId);
+
+    updateQuantity();
 
     viewAddedMessage(productId);
 }
