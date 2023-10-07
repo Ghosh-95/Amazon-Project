@@ -1,4 +1,4 @@
-export let cart = [{
+export let cart = JSON.parse(localStorage.getItem('cart')) || [{
     productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     quantity: 2
 },
@@ -7,6 +7,10 @@ export let cart = [{
     quantity: 1
 }];
 
+
+function saveToLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
 
 export function addToCart(productId) {
     const selectQuantity = document.querySelector(`.js-quantity-selector-${productId}`);
@@ -21,6 +25,8 @@ export function addToCart(productId) {
 
     cart.forEach(cartItem => totalQuantity += cartItem.quantity);
     document.querySelector('.cart-quantity').textContent = totalQuantity;
+
+    saveToLocalStorage();
 }
 
 export function removeFromCart(productId) {
@@ -36,4 +42,6 @@ export function removeFromCart(productId) {
 
     // The replacing newCart as original cart;
     cart = newCart;
+
+    saveToLocalStorage();
 }
