@@ -2,11 +2,11 @@ import { cart, removeFromCart } from "../data/cart.js";
 import { default as products } from "../data/products.js";
 
 function formatCurrency(priceCents) {
-    return (priceCents / 100).toFixed(2)
+  return (priceCents / 100).toFixed(2)
 }
 
 function generateMarkupMain(product) {
-    return `
+  return `
     <div class="product-container">
         <div class="product-image-container">
             <img class="product-image" src="${product.image}">
@@ -55,8 +55,8 @@ function generateMarkupMain(product) {
 }
 
 function generateMarkupCheckout(matchingProduct, cartItem) {
-    return `
-    <div class="cart-item-container">
+  return `
+    <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
         Delivery date: Tuesday, June 21
       </div>
@@ -129,35 +129,35 @@ function generateMarkupCheckout(matchingProduct, cartItem) {
 }
 
 export function addMarkupToPage(handler) {
-    let productsHTML = ''
-    products.forEach(product => productsHTML += generateMarkupMain(product));
+  let productsHTML = ''
+  products.forEach(product => productsHTML += generateMarkupMain(product));
 
-    const productsGrid = document.querySelector('.js-products-grid');
-    productsGrid.insertAdjacentHTML('afterbegin', productsHTML);
+  const productsGrid = document.querySelector('.js-products-grid');
+  productsGrid.insertAdjacentHTML('afterbegin', productsHTML);
 
-    const addToCartBtn = document.querySelectorAll('.js-add-to-cart');
-    // Event Listener
-    addToCartBtn.forEach(btn => btn.addEventListener('click', handler));
+  const addToCartBtn = document.querySelectorAll('.js-add-to-cart');
+  // Event Listener
+  addToCartBtn.forEach(btn => btn.addEventListener('click', handler));
 }
 
 
 export function addMarkupToCheckout(handler) {
-    let cartSummeryHTML = '';
-    cart.forEach(cartItem => {
+  let cartSummeryHTML = '';
+  cart.forEach(cartItem => {
 
-        const productId = cartItem.productId;
-        let matchingProduct;
+    const productId = cartItem.productId;
+    let matchingProduct;
 
-        products.forEach(product => {
-            if (product.id === productId) matchingProduct = product;
-        });
-
-        cartSummeryHTML += generateMarkupCheckout(matchingProduct, cartItem)
+    products.forEach(product => {
+      if (product.id === productId) matchingProduct = product;
     });
 
-    const orderSummery = document.querySelector('.js-order-summery');
-    orderSummery.insertAdjacentHTML('afterbegin', cartSummeryHTML);
+    cartSummeryHTML += generateMarkupCheckout(matchingProduct, cartItem)
+  });
 
-    const deleteButtons = document.querySelectorAll('.js-delete-link');
-    deleteButtons.forEach(btn => btn.addEventListener('click', handler));
+  const orderSummery = document.querySelector('.js-order-summery');
+  orderSummery.insertAdjacentHTML('afterbegin', cartSummeryHTML);
+
+  const deleteButtons = document.querySelectorAll('.js-delete-link');
+  deleteButtons.forEach(btn => btn.addEventListener('click', handler));
 }

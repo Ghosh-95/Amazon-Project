@@ -30,6 +30,10 @@ export function removeFromCart(productId) {
         // Removing product that matches with product id
         if (cartItem.productId !== productId) newCart.push(cartItem);
     });
+
+    const container = document.querySelector(`.js-cart-item-container-${productId}`);
+    container.remove();
+
     // The replacing newCart as original cart;
     cart = newCart;
 }

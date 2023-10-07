@@ -9,4 +9,4 @@ function handler() {
 
     removeFromCart(productId);
 
-}
+};
