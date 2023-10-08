@@ -42,3 +42,9 @@ export function removeFromCart(productId) {
 
     saveToLocalStorage();
 }
+
+export function updateCartQuantity(className) {
+    let totalQuantity = 0;
+    cart.forEach(cartItem => totalQuantity += cartItem.quantity);
+    document.querySelector(className).textContent = totalQuantity;
+}
