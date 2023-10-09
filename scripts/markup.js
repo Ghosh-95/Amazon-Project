@@ -70,11 +70,13 @@ export function generateMarkupCheckout(matchingProduct, cartItem) {
           </div>
           <div class="product-quantity">
             <span>
-              Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+              Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
             </span>
-            <span class="update-quantity-link link-primary">
+            <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${matchingProduct.id}">
               Update
             </span>
+            <input type="text" class="quantity-input js-quantity-input" id="input-quantity-${matchingProduct.id}">
+            <span class="save-quantity-link link-primary js-save-quantity-link-${matchingProduct.id}">Save</span>
             <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
               Delete
             </span>
