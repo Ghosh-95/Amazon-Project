@@ -1,5 +1,18 @@
 import { addToCart, updateCartQuantity } from "../data/cart.js";
-import { addMarkupToPage } from "./markup.js";
+import { generateMarkupMain } from "./markup.js";
+import products from "../data/products.js";
+
+function addMarkupToPage(handler) {
+    let productsHTML = ''
+    products.forEach(product => productsHTML += generateMarkupMain(product));
+
+    const productsGrid = document.querySelector('.js-products-grid');
+    productsGrid.insertAdjacentHTML('afterbegin', productsHTML);
+
+    const addToCartBtn = document.querySelectorAll('.js-add-to-cart');
+    // Event Listener
+    addToCartBtn.forEach(btn => btn.addEventListener('click', handler));
+}
 
 addMarkupToPage(handler);
 
